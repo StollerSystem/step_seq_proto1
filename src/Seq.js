@@ -12,9 +12,9 @@ function Seq() {
 
   synth.connect(filter);
   
-  // synth.connect(feedbackDelay);
+  // filter.connect(delay);
 
-  // synth.gain.chain(filter, delay, Tone.Destination);
+  synth.gain.chain(filter, delay, Tone.Destination);
 
   Tone.Transport.scheduleRepeat(repeat, '8n');
   Tone.Transport.bpm.value = 90
@@ -57,7 +57,6 @@ function Seq() {
     index++;
   }
 
-
   function startSeq() {    
     Tone.start();
     Tone.Transport.start();
@@ -65,8 +64,7 @@ function Seq() {
 
   function stopSeq() {    
     Tone.Transport.stop();
-  }
-  
+  }  
 
   window.onload = function() {
 
@@ -74,26 +72,21 @@ function Seq() {
     slide.addEventListener("change", function() {     
       filter.frequency.value = this.value*100;     
     });
-  }   
-  
+  }     
 
   return (
     <React.Fragment>
       <div className="container mainBox">
-
         <h4>S T 3 P // S 3 Q 1</h4>      
         <div id="row1">
-
           <div className="stepBox">
             <input type="checkbox" id="c1" />
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step1"/>
           </div>
-
           <div className="stepBox">
             <input type="checkbox" id="c2"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step2"/>
           </div>
-
           <div className="stepBox">
             <input type="checkbox" id="c3"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step3"/>
@@ -122,13 +115,10 @@ function Seq() {
         <button className="btn btn-success" onClick={startSeq}>start</button>
         <button className="btn btn-danger" onClick={stopSeq}>stop</button>
       </div>
-
       <div className="container controlBox">
         <p>FILTER<input type="range" min="0" max="100" defaultValue="75" className="slider" id="filter"/></p>
         <br></br>
-      </div>
-
-      
+      </div>      
     </React.Fragment>
   )
 }
