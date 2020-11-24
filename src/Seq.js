@@ -1,15 +1,13 @@
 import React from 'react';
 import * as Tone from 'tone';
 
-function Seq() {
-
-  let filterValue = 300;
+function Seq() {  
 
   const synth = new Tone.Synth();
   synth.oscillator.type = "square";
   const gain = new Tone.Gain(.5);  
   synth.gain = gain;
-  const filter = new Tone.Filter(300, 'lowpass', -24).toDestination();
+  const filter = new Tone.Filter(7500, 'lowpass', -24).toDestination();
   const delay = new Tone.FeedbackDelay(.5, 0.5);
 
   synth.connect(filter);
@@ -20,14 +18,13 @@ function Seq() {
 
   Tone.Transport.scheduleRepeat(repeat, '8n');
   Tone.Transport.bpm.value = 90
-
   
   const notes = ["D3","F3","A3","C4","D4","E4","G4","A4"];  
   
   let index = 0;
 
   function repeat(time) {    
-
+    
     var steps = [
       document.getElementById("step1"),
       document.getElementById("step2"),
@@ -38,13 +35,12 @@ function Seq() {
       document.getElementById("step7"),
       document.getElementById("step8")
     ];
-
-    const row1 = document.getElementById('row1');
     
-    let stepCount = index % 8;
+    const row1 = document.getElementById('row1');
+    let stepCount = index % 8;    
+    let input = row1.querySelector(`div:nth-child(${stepCount+1}) input[id=c${stepCount+1}]`);        
     // change color
-    let input = row1.querySelector(`div:nth-child(${stepCount+1}) input`);        
-    let divLast;
+    let divLast;    
     if (stepCount === 0) {
       divLast = row1.querySelector(`div:nth-child(${8})`);
       
@@ -52,12 +48,12 @@ function Seq() {
         divLast = row1.querySelector(`div:nth-child(${stepCount})`);
     }    
     divLast.className = 'stepBox';
-    let divActive = row1.querySelector(`div:nth-child(${stepCount+1})`);
+    let divActive = row1.querySelector(`div:nth-child(${stepCount+1})`);    
     divActive.className = 'stepBox active';
-    // trigger sound 
+    // // trigger sound     
     if (input.checked) {
       synth.triggerAttackRelease(notes[parseInt(steps[stepCount].value)-1], '8n', time);      
-    }
+    } 
     index++;
   }
 
@@ -70,30 +66,15 @@ function Seq() {
   function stopSeq() {    
     Tone.Transport.stop();
   }
-
   
 
   window.onload = function() {
 
-
     var slide = document.getElementById('filter');
-    
-
-    slide.addEventListener("change", function() {
-      console.log("slider "+this.value)
-      filterValue = this.value*100;
-      console.log(filterValue)
-      filter.frequency.value = filterValue;
-      // synth.filter.frequency = this.value*100
-
-
-      // console.log(synth.filter.frequency.value)
+    slide.addEventListener("change", function() {     
+      filter.frequency.value = this.value*100;     
     });
-    
-    
-
-  }
-    
+  }   
   
 
   return (
@@ -102,36 +83,39 @@ function Seq() {
 
         <h4>S T 3 P // S 3 Q 1</h4>      
         <div id="row1">
+
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c1" />
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step1"/>
           </div>
+
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c2"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step2"/>
           </div>
+
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c3"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step3"/>
           </div>
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c4"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step4"/>
           </div>
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c5"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step5"/>
           </div>
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c6"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step6"/>
           </div>
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c7"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step7"/>
           </div>        
           <div className="stepBox">
-            <input type="checkbox" />
+            <input type="checkbox" id="c8"/>
             <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step8"/>
           </div>        
         </div>
@@ -140,7 +124,7 @@ function Seq() {
       </div>
 
       <div className="container controlBox">
-        <p>FILTER<input type="range" min="0" max="100" defaultValue="6" className="slider" id="filter"/></p>
+        <p>FILTER<input type="range" min="0" max="100" defaultValue="75" className="slider" id="filter"/></p>
         <br></br>
       </div>
 
