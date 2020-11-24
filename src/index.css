@@ -3,3 +3,34 @@ body {
   color: white;
 }
 
+.stepBox {
+  border: solid white;
+  border-width: 1px;
+  padding: 10px;
+
+}
+
+.mainBox {
+  margin-top: 20px;
+  width: 275px;
+  border: solid white;
+  border-width: 1px;
+  padding: 10px;
+  
+}
+
+input {
+  margin: 5px;
+}
+
+.slider {
+  float: right;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.active {
+  background-color: grey;
+}
