@@ -5,9 +5,10 @@ function Seq() {
 
   const synth = new Tone.Synth().toDestination();
   synth.oscillator.type = "square";  
-  const filter = new Tone.Filter(150, 'lowpass').toDestination();
+  const filter = new Tone.Filter(300, 'lowpass', -24).toDestination();
   const feedbackDelay = new Tone.FeedbackDelay(.5, 0.5).toDestination();
   synth.connect(filter);
+  
   synth.connect(feedbackDelay);
 
   Tone.Transport.scheduleRepeat(repeat, '8n');
@@ -66,7 +67,7 @@ function Seq() {
 
   return (
     <React.Fragment>
-      <h4>S T 3 P // S 3 Q</h4>      
+      <h4>S T 3 P // S 3 Q 1</h4>      
       <div id="row1">
         <div className="stepBox">
           <input type="checkbox" />

@@ -1,10 +1,10 @@
 body {
   background-color: black;
-  color: white;
+  color: rgb(0, 238, 0);
 }
 
 .stepBox {
-  border: solid white;
+  border: solid rgb(0, 238, 0);
   border-width: 1px;
   padding: 10px;
 
@@ -13,7 +13,7 @@ body {
 .mainBox {
   margin-top: 20px;
   width: 275px;
-  border: solid white;
+  border: solid rgb(0, 238, 0);
   border-width: 1px;
   padding: 10px;
   
