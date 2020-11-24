@@ -11,7 +11,7 @@ export default class App extends React.Component {
 
   render() {    
     return (
-      <div className="container mainBox">        
+      <div className="container">        
         <Seq />        
       </div>
     );

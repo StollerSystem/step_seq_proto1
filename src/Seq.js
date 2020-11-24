@@ -3,13 +3,20 @@ import * as Tone from 'tone';
 
 function Seq() {
 
-  const synth = new Tone.Synth().toDestination();
-  synth.oscillator.type = "square";  
+  let filterValue = 300;
+
+  const synth = new Tone.Synth();
+  synth.oscillator.type = "square";
+  const gain = new Tone.Gain(.5);  
+  synth.gain = gain;
   const filter = new Tone.Filter(300, 'lowpass', -24).toDestination();
-  const feedbackDelay = new Tone.FeedbackDelay(.5, 0.5).toDestination();
+  const delay = new Tone.FeedbackDelay(.5, 0.5);
+
   synth.connect(filter);
   
-  synth.connect(feedbackDelay);
+  // synth.connect(feedbackDelay);
+
+  // synth.gain.chain(filter, delay, Tone.Destination);
 
   Tone.Transport.scheduleRepeat(repeat, '8n');
   Tone.Transport.bpm.value = 90
@@ -63,49 +70,81 @@ function Seq() {
   function stopSeq() {    
     Tone.Transport.stop();
   }
+
+  
+
+  window.onload = function() {
+
+
+    var slide = document.getElementById('filter');
+    
+
+    slide.addEventListener("change", function() {
+      console.log("slider "+this.value)
+      filterValue = this.value*100;
+      console.log(filterValue)
+      filter.frequency.value = filterValue;
+      // synth.filter.frequency = this.value*100
+
+
+      // console.log(synth.filter.frequency.value)
+    });
+    
+    
+
+  }
+    
   
 
   return (
     <React.Fragment>
-      <h4>S T 3 P // S 3 Q 1</h4>      
-      <div id="row1">
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step1"/>
+      <div className="container mainBox">
+
+        <h4>S T 3 P // S 3 Q 1</h4>      
+        <div id="row1">
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step1"/>
+          </div>
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step2"/>
+          </div>
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step3"/>
+          </div>
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step4"/>
+          </div>
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step5"/>
+          </div>
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step6"/>
+          </div>
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step7"/>
+          </div>        
+          <div className="stepBox">
+            <input type="checkbox" />
+            <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step8"/>
+          </div>        
         </div>
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step2"/>
-        </div>
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step3"/>
-        </div>
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step4"/>
-        </div>
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step5"/>
-        </div>
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step6"/>
-        </div>
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step7"/>
-        </div>        
-        <div className="stepBox">
-          <input type="checkbox" />
-          <input type="range" min="1" max="8" defaultValue="1" className="slider" id="step8"/>
-        </div>        
+        <button className="btn btn-success" onClick={startSeq}>start</button>
+        <button className="btn btn-danger" onClick={stopSeq}>stop</button>
       </div>
-      <button className="btn btn-success" onClick={startSeq}>start</button>
-      <button className="btn btn-danger" onClick={stopSeq}>stop</button>
-      <div className="slidecontainer">
+
+      <div className="container controlBox">
+        <p>FILTER<input type="range" min="0" max="100" defaultValue="6" className="slider" id="filter"/></p>
+        <br></br>
       </div>
+
+      
     </React.Fragment>
   )
 }

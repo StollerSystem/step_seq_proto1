@@ -37,3 +37,12 @@ input {
   border-width: 1px;
   padding: 10px;
 }
+
+.controlBox {
+  margin-top: 20px;
+  width: 275px;
+  border: solid rgb(0, 238, 0);
+  border-width: 1px;
+  padding: 10px;
+  height: auto;
+}
