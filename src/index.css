@@ -32,5 +32,8 @@ input {
 }
 
 .active {
-  background-color: grey;
+  background-color: rgb(68, 68, 68);
+  border: solid rgb(86, 0, 157);
+  border-width: 1px;
+  padding: 10px;
 }
