@@ -4,36 +4,26 @@ import * as Tone from 'tone';
 function Seq() {  
 
   const synth = new Tone.Synth();
-  synth.oscillator.type = "square";
   const gain = new Tone.Gain(.5);  
-  synth.gain = gain;
   const filter = new Tone.Filter(7500, 'lowpass', -24).toDestination();
   const delay = new Tone.FeedbackDelay(.5, 0.5);
-
-  // const env = new Tone.Envelope({
-	// 	attack: 0.1,
-	// 	decay: 0.2,
-	// 	sustain: 0.5,
-	// 	release: 0.8,
-	// }).toDestination();
-
-  synth.connect(filter);
+  const notes = ["D3","F3","A3","C4","D4","E4","G4","A4"];    
+  let index = 0;
   
-  // filter.connect(delay);
-
+  synth.oscillator.type = "square";
+  synth.connect(filter);  
+  synth.gain = gain;
   synth.gain.chain(filter, delay, Tone.Destination);
 
   Tone.Transport.scheduleRepeat(repeat, '8n');
-  Tone.Transport.bpm.value = 90
+  Tone.Transport.bpm.value = 90  
   
-  const notes = ["D3","F3","A3","C4","D4","E4","G4","A4"];  
-  
-  let index = 0;
 
-  function repeat(time) {
+  function repeat(time) {    
     
-    // console.log(synth)
-    
+    const row1 = document.getElementById('row1');
+    let stepCount = index % 8;    
+    let input = row1.querySelector(`div:nth-child(${stepCount+1}) input[id=c${stepCount+1}]`);
     var steps = [
       document.getElementById("step1"),
       document.getElementById("step2"),
@@ -43,33 +33,30 @@ function Seq() {
       document.getElementById("step6"),
       document.getElementById("step7"),
       document.getElementById("step8")
-    ];
+    ];    
     
-    const row1 = document.getElementById('row1');
-    let stepCount = index % 8;    
-    let input = row1.querySelector(`div:nth-child(${stepCount+1}) input[id=c${stepCount+1}]`);        
-    // change color
+    if (input.checked) {
+      synth.triggerAttackRelease(notes[parseInt(steps[stepCount].value)-1], '32n',time);      
+    } 
+    index++;
+    stepVisual(stepCount,row1);
+  }
+
+
+  function stepVisual(stepCount,row1) {
     let divLast;    
     if (stepCount === 0) {
-      divLast = row1.querySelector(`div:nth-child(${8})`);
-      
+      divLast = row1.querySelector(`div:nth-child(${8})`);      
     } else {
         divLast = row1.querySelector(`div:nth-child(${stepCount})`);
     }    
     divLast.className = 'stepBox';
     let divActive = row1.querySelector(`div:nth-child(${stepCount+1})`);    
     divActive.className = 'stepBox active';
-    // // trigger sound     
-    if (input.checked) {
-      synth.triggerAttackRelease(notes[parseInt(steps[stepCount].value)-1], '32n');      
-    } 
-    index++;
   }
 
-  function startSeq() {    
 
-    // console.log(synth)
-
+  function startSeq() {
     Tone.start();
     Tone.Transport.start();
   }
