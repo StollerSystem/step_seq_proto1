@@ -12,12 +12,12 @@ function Seq() {
   let index = 0;  
 
   delay.wet.value = 0;
+  delay.gain = 1;
   synth.connect(dist);
   synth.oscillator.type = "square";
   synth.connect(filter);  
   synth.gain = gain;
   synth.gain.chain(dist, filter, delay, Tone.Destination);
-  delay.gain = 1;
   Tone.Transport.scheduleRepeat(repeat, '8n');
   Tone.Transport.bpm.value = 90  
   
@@ -27,7 +27,7 @@ function Seq() {
     const row1 = document.getElementById('row1');
     let stepCount = index % 8;    
     let input = row1.querySelector(`div:nth-child(${stepCount+1}) input[id=c${stepCount+1}]`);
-    var steps = [
+    var stepSliders = [
       document.getElementById("step1"),
       document.getElementById("step2"),
       document.getElementById("step3"),
@@ -39,7 +39,7 @@ function Seq() {
     ];    
     
     if (input.checked) {
-      synth.triggerAttackRelease(notes[parseInt(steps[stepCount].value)-1], '32n',time);      
+      synth.triggerAttackRelease(notes[parseInt(stepSliders[stepCount].value)-1], '32n',time);      
     } 
     index++;
     stepVisual(stepCount,row1);
