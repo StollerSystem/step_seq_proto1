@@ -12,14 +12,12 @@ function Seq() {
   let index = 0;  
 
   delay.wet.value = 0;
-
   synth.connect(dist);
   synth.oscillator.type = "square";
   synth.connect(filter);  
   synth.gain = gain;
   synth.gain.chain(dist, filter, delay, Tone.Destination);
   delay.gain = 1;
-
   Tone.Transport.scheduleRepeat(repeat, '8n');
   Tone.Transport.bpm.value = 90  
   

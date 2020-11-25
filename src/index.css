@@ -1,6 +1,8 @@
 body {
   background-color: black;
   color: rgb(0, 238, 0);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
 }
 
 .stepBox {
