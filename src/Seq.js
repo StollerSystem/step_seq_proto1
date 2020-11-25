@@ -11,6 +11,8 @@ function Seq() {
   const notes = ["D3","F3","A3","C4","D4","E4","G4","A4"];    
   let index = 0;  
 
+  delay.wet.value = 0;
+
   synth.connect(dist);
   synth.oscillator.type = "square";
   synth.connect(filter);  
@@ -85,6 +87,11 @@ function Seq() {
     distortionSlide.addEventListener("change", function() {     
       dist.distortion = this.value/10;     
     });
+
+    var delaySlide = document.getElementById('delay');
+    delaySlide.addEventListener("change", function() {     
+      delay.wet.value = this.value/10;     
+    });
   }     
 
   return (
@@ -135,7 +142,8 @@ function Seq() {
           <div className="container controlBox">
             <p>FILTER<input type="range" min="0" max="100" defaultValue="75" className="slider" id="filter"/></p>   
             <p>RELEASE<input type="range" min="0" max="30" defaultValue="5" className="slider" id="release"/></p> 
-            <p>DISTORTION<input type="range" min="0" max="30" defaultValue="0" className="slider" id="distortion"/></p>          
+            <p>DISTORTION<input type="range" min="0" max="30" defaultValue="0" className="slider" id="distortion"/></p>
+            <p>DELAY<input type="range" min="0" max="10" defaultValue="0" className="slider" id="delay"/></p>            
           </div>          
         </div>
       </div>
