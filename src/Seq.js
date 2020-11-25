@@ -6,14 +6,17 @@ function Seq() {
   const synth = new Tone.Synth();
   const gain = new Tone.Gain(.5);  
   const filter = new Tone.Filter(7500, 'lowpass', -24).toDestination();
-  const delay = new Tone.FeedbackDelay(.5, 0.5);
+  const delay = new Tone.FeedbackDelay(.5, .5);  
+  const dist = new Tone.Distortion(0);
   const notes = ["D3","F3","A3","C4","D4","E4","G4","A4"];    
-  let index = 0;
-  
+  let index = 0;  
+
+  synth.connect(dist);
   synth.oscillator.type = "square";
   synth.connect(filter);  
   synth.gain = gain;
-  synth.gain.chain(filter, delay, Tone.Destination);
+  synth.gain.chain(dist, filter, delay, Tone.Destination);
+  delay.gain = 1;
 
   Tone.Transport.scheduleRepeat(repeat, '8n');
   Tone.Transport.bpm.value = 90  
@@ -57,6 +60,7 @@ function Seq() {
 
 
   function startSeq() {
+    console.log(synth)
     Tone.start();
     Tone.Transport.start();
   }
@@ -75,6 +79,11 @@ function Seq() {
     var releaseSlide = document.getElementById('release');
     releaseSlide.addEventListener("change", function() {     
       synth.envelope.release = this.value/2;     
+    });
+
+    var distortionSlide = document.getElementById('distortion');
+    distortionSlide.addEventListener("change", function() {     
+      dist.distortion = this.value/10;     
     });
   }     
 
@@ -125,7 +134,8 @@ function Seq() {
         <div className="col-md-6">
           <div className="container controlBox">
             <p>FILTER<input type="range" min="0" max="100" defaultValue="75" className="slider" id="filter"/></p>   
-            <p>RELEASE<input type="range" min="0" max="30" defaultValue="5" className="slider" id="release"/></p>        
+            <p>RELEASE<input type="range" min="0" max="30" defaultValue="5" className="slider" id="release"/></p> 
+            <p>DISTORTION<input type="range" min="0" max="30" defaultValue="0" className="slider" id="distortion"/></p>          
           </div>          
         </div>
       </div>
