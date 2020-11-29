@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Tone from 'tone';
+import {ReactComponent as Star1} from './Pentagram.svg';
 
 function Seq() {  
 
@@ -9,7 +10,7 @@ function Seq() {
   const delay = new Tone.FeedbackDelay(.5, .5);  
   const dist = new Tone.Distortion(0);
   const notes = ["D3","F3","A3","C4","D4","E4","G4","A4"];    
-  let index = 0;  
+  let index = 0;    
 
   delay.wet.value = 0;
   delay.gain = 1;
@@ -23,7 +24,7 @@ function Seq() {
   
 
   function repeat(time) {    
-    
+    pentFlash(false);
     const row1 = document.getElementById('row1');
     let stepCount = index % 8;    
     let input = row1.querySelector(`div:nth-child(${stepCount+1}) input[id=c${stepCount+1}]`);
@@ -39,6 +40,7 @@ function Seq() {
     ];    
     
     if (input.checked) {
+      pentFlash(true);
       synth.triggerAttackRelease(notes[parseInt(stepSliders[stepCount].value)-1], '32n',time);      
     } 
     index++;
@@ -55,12 +57,20 @@ function Seq() {
     }    
     divLast.className = 'stepBox';
     let divActive = row1.querySelector(`div:nth-child(${stepCount+1})`);    
-    divActive.className = 'stepBox active';
+    divActive.className = 'stepBox active';    
+  }
+
+  function pentFlash(bool) {
+    let pent = document.getElementById('pent');
+    if (bool) {
+      pent.setAttribute("fill", '#6aff00');
+    } else {
+      pent.setAttribute("fill", 'black');
+    }
   }
 
 
-  function startSeq() {
-    console.log(synth)
+  function startSeq() {    
     Tone.start();
     Tone.Transport.start();
   }
@@ -90,7 +100,10 @@ function Seq() {
     delaySlide.addEventListener("change", function() {     
       delay.wet.value = this.value/10;     
     });
-  }     
+  } 
+  
+  
+
 
   return (
     <React.Fragment>
@@ -142,8 +155,14 @@ function Seq() {
             <p>RELEASE<input type="range" min="0" max="30" defaultValue="5" className="slider" id="release"/></p> 
             <p>DISTORTION<input type="range" min="0" max="30" defaultValue="0" className="slider" id="distortion"/></p>
             <p>DELAY<input type="range" min="0" max="10" defaultValue="0" className="slider" id="delay"/></p>            
+          </div>
+          <div className="star">        
+            <Star1 id="pent" fill="black"/>       
           </div>          
         </div>
+      </div>
+      <div className="row container">
+        
       </div>
     </React.Fragment>
   )
