@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/step_seq_proto1/static/css/main.f516a959.chunk.css",
+    "main.js": "/step_seq_proto1/static/js/main.810828d4.chunk.js",
+    "main.js.map": "/step_seq_proto1/static/js/main.810828d4.chunk.js.map",
+    "runtime-main.js": "/step_seq_proto1/static/js/runtime-main.eff62fd0.js",
+    "runtime-main.js.map": "/step_seq_proto1/static/js/runtime-main.eff62fd0.js.map",
+    "static/js/2.6012af12.chunk.js": "/step_seq_proto1/static/js/2.6012af12.chunk.js",
+    "static/js/2.6012af12.chunk.js.map": "/step_seq_proto1/static/js/2.6012af12.chunk.js.map",
+    "index.html": "/step_seq_proto1/index.html",
+    "static/css/main.f516a959.chunk.css.map": "/step_seq_proto1/static/css/main.f516a959.chunk.css.map",
+    "static/js/2.6012af12.chunk.js.LICENSE.txt": "/step_seq_proto1/static/js/2.6012af12.chunk.js.LICENSE.txt",
+    "static/media/Pentagram.4a32508e.svg": "/step_seq_proto1/static/media/Pentagram.4a32508e.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.eff62fd0.js",
+    "static/js/2.6012af12.chunk.js",
+    "static/css/main.f516a959.chunk.css",
+    "static/js/main.810828d4.chunk.js"
+  ]
+}
